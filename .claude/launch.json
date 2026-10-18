@@ -4,9 +4,52 @@
     {
       "name": "SubSet Dev Server",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3100,
       "autoPort": true
+    },
+    {
+      "name": "SubSet Mock API",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "mock"
+      ],
+      "port": 4000,
+      "autoPort": false
+    },
+    {
+      "name": "SubSet Mock API \u2014 error",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "mock:error"
+      ],
+      "port": 4000,
+      "autoPort": false
+    },
+    {
+      "name": "SubSet Mock API \u2014 empty",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "mock:empty"
+      ],
+      "port": 4000,
+      "autoPort": false
+    },
+    {
+      "name": "SubSet Mock API \u2014 slow",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "mock:slow"
+      ],
+      "port": 4000,
+      "autoPort": false
     }
   ]
 }
