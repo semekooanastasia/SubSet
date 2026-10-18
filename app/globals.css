@@ -1,355 +1,417 @@
+/* SubSet — vizuālais slānis atbilst K2 prototipam (Figma). */
+
 :root {
   color-scheme: light;
-  --bg: #eef0f5;
+  --bg: #f4f5fa;
   --surface: #ffffff;
-  --surface-2: #f5f6fa;
-  --surface-3: #eaecf3;
-  --text: #14161c;
-  --text-2: #5b6172;
-  --text-3: #8b91a3;
-  --border: #e2e5ee;
-  --accent: #4a3aff;
-  --accent-soft: #eceaff;
-  --accent-text: #ffffff;
+  --surface-2: #eceef6;
+  --text: #14161f;
+  --text-2: #6b7280;
+  --text-3: #9aa0ae;
+  --line: #e8eaf1;
+  --primary: #4b32e0;
+  --primary-2: #6a4ff5;
+  --primary-soft: #edebff;
+  --on-primary: #ffffff;
   --danger: #d92d20;
   --danger-soft: #fdecea;
-  --success: #0f9d58;
-  --warning: #e0820c;
-  --shadow: 0 1px 2px rgba(20, 22, 28, .06), 0 8px 24px rgba(20, 22, 28, .06);
-  --radius: 18px;
+  --warn: #b3701a;
+  --warn-soft: #fff3e0;
+  --shadow: 0 1px 2px rgba(20, 22, 31, .05), 0 10px 30px rgba(20, 22, 31, .06);
+  --radius: 20px;
 }
 
 [data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0b0c10;
-  --surface: #15171e;
-  --surface-2: #1b1e27;
-  --surface-3: #232733;
+  --bg: #0b0c12;
+  --surface: #15171f;
+  --surface-2: #1d2029;
   --text: #f2f4f8;
   --text-2: #a7aec0;
-  --text-3: #7b8296;
-  --border: #272b36;
-  --accent: #8b7dff;
-  --accent-soft: #23213f;
-  --accent-text: #12121a;
+  --text-3: #798093;
+  --line: #262a35;
+  --primary: #8b7dff;
+  --primary-2: #6a4ff5;
+  --primary-soft: #241f45;
+  --on-primary: #11121a;
   --danger: #ff6b5e;
   --danger-soft: #3a1e1c;
-  --success: #4ad295;
-  --warning: #f5b544;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .35);
+  --warn: #f5b544;
+  --warn-soft: #3a2c15;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .35);
 }
 
 * { box-sizing: border-box; }
 
 html, body {
   margin: 0;
-  padding: 0;
   background: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-button { font: inherit; color: inherit; cursor: pointer; }
-input, select { font: inherit; color: inherit; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
 
-.phone {
-  max-width: 440px;
-  margin: 0 auto;
+.screen {
+  max-width: 420px;
   min-height: 100dvh;
+  margin: 0 auto;
   background: var(--bg);
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-/* ---------- Tipogrāfija ---------- */
-.screen-title { font-size: 26px; font-weight: 700; letter-spacing: -.02em; margin: 0; }
-.section-title { font-size: 13px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; margin: 0 0 10px; }
-.muted { color: var(--text-2); }
-.tiny { font-size: 12px; }
-
-/* ---------- Pogas ---------- */
-.btn {
-  border: none;
-  border-radius: 14px;
-  padding: 14px 18px;
-  font-weight: 600;
-  font-size: 15px;
-  background: var(--surface-3);
-  color: var(--text);
-  transition: transform .12s ease, opacity .12s ease;
-}
-.btn:active { transform: scale(.985); }
-.btn-primary { background: var(--accent); color: var(--accent-text); }
-.btn-danger { background: var(--danger-soft); color: var(--danger); }
-.btn-block { width: 100%; }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
-.btn-ghost { background: transparent; border: 1px solid var(--border); }
-.btn-link { background: none; border: none; color: var(--accent); font-weight: 600; padding: 0; }
+.content { flex: 1; padding: 0 16px 120px; }
 
 /* ---------- Virsraksts ---------- */
-.topbar {
-  padding: 22px 20px 8px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
+.topbar { display: flex; align-items: center; gap: 10px; padding: 18px 16px 10px; }
+.topbar-title { font-size: 24px; font-weight: 700; letter-spacing: -.02em; margin: 0; flex: 1; }
+.topbar-title.sm { font-size: 17px; font-weight: 600; }
+.topbar-action { margin-left: auto; }
+.icon-btn {
+  width: 36px; height: 36px; border-radius: 12px; border: none;
+  background: transparent; font-size: 17px; display: grid; place-items: center;
 }
-.topbar-sub { font-size: 13px; color: var(--text-2); margin-top: 2px; }
 
-.avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--accent-soft); color: var(--accent);
-  display: grid; place-items: center; font-weight: 700; font-size: 15px;
-  border: none;
+.section-title {
+  font-size: 13px; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .06em; margin: 20px 0 8px;
+  display: flex; justify-content: space-between; align-items: baseline;
 }
+.day-total { text-transform: none; letter-spacing: 0; color: var(--text-2); font-size: 12px; }
+.muted { color: var(--text-2); }
+.tiny { font-size: 12px; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; }
+.danger { color: var(--danger); }
+.hint { font-size: 12px; color: var(--text-2); margin: 6px 0 0; }
 
 /* ---------- Kopsummas kartīte ---------- */
 .total-card {
-  margin: 6px 20px 18px;
-  padding: 20px;
-  border-radius: 22px;
-  background: linear-gradient(150deg, var(--accent), color-mix(in srgb, var(--accent) 62%, #000));
-  color: #fff;
-  box-shadow: var(--shadow);
-}
-.total-label { font-size: 13px; opacity: .8; }
-.total-value { font-size: 36px; font-weight: 700; letter-spacing: -.03em; margin-top: 4px; }
-.total-foot { display: flex; justify-content: space-between; margin-top: 16px; font-size: 13px; opacity: .85; }
-
-/* ---------- Saturs ---------- */
-.content { flex: 1; padding: 0 20px 160px; }
-.list { display: flex; flex-direction: column; gap: 10px; }
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
   border-radius: var(--radius);
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  text-align: left;
+  padding: 18px;
+  color: #fff;
+  background:
+    radial-gradient(120% 120% at 88% 10%, rgba(80, 160, 255, .55), transparent 55%),
+    linear-gradient(140deg, var(--primary-2), var(--primary));
   box-shadow: var(--shadow);
 }
-.card-body { flex: 1; min-width: 0; }
-.card-name { font-weight: 600; font-size: 15px; }
-.card-meta { font-size: 12.5px; color: var(--text-2); margin-top: 3px; }
-.card-right { text-align: right; }
-.card-amount { font-weight: 600; font-size: 15px; }
-.card-days { font-size: 12px; margin-top: 3px; }
-.soon { color: var(--warning); font-weight: 600; }
+.total-label { font-size: 13px; opacity: .85; }
+.total-value { font-size: 34px; font-weight: 700; letter-spacing: -.03em; margin-top: 2px; }
+.total-pills { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.pill {
+  background: rgba(255, 255, 255, .18);
+  border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 500;
+}
+
+/* ---------- Saraksts ---------- */
+.list-head { display: flex; align-items: baseline; justify-content: space-between; margin: 20px 0 8px; }
+.list-head h2 { font-size: 15px; font-weight: 600; margin: 0; }
+.list-sort { font-size: 13px; color: var(--primary); font-weight: 500; }
+
+.card-list {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  width: 100%; text-align: left; background: none; border-left: none; border-right: none; border-top: none;
+}
+.row:last-child { border-bottom: none; }
+.row-body { flex: 1; min-width: 0; }
+.row-name { font-size: 14.5px; font-weight: 600; }
+.row-meta { font-size: 12.5px; color: var(--text-2); margin-top: 2px; }
+.row-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.row-amount { font-size: 14.5px; font-weight: 600; }
+
+.badge {
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--surface-2); color: var(--text-2);
+}
+.badge.soon { background: var(--warn-soft); color: var(--warn); }
+.badge.trial { background: var(--primary-soft); color: var(--primary); }
 
 .icon {
-  width: 44px; height: 44px; border-radius: 13px;
-  display: grid; place-items: center;
-  color: #fff; font-weight: 700; font-size: 15px; flex: none;
+  width: 42px; height: 42px; border-radius: 12px; flex: none;
+  display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 15px;
 }
-.icon-sm { width: 30px; height: 30px; border-radius: 9px; font-size: 11px; }
 .icon-lg { width: 64px; height: 64px; border-radius: 19px; font-size: 22px; }
 
-.empty {
-  margin-top: 48px;
-  text-align: center;
-  padding: 0 24px;
+/* ---------- Stāvokļi ---------- */
+.state-card {
+  background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 26px 22px; text-align: center; margin-top: 16px;
 }
-.empty-emoji { font-size: 42px; }
-.empty h3 { margin: 14px 0 6px; font-size: 18px; }
-.empty p { margin: 0 0 20px; color: var(--text-2); font-size: 14px; line-height: 1.5; }
+.state-icons { display: flex; justify-content: center; margin-bottom: 14px; }
+.state-icons .icon { margin-left: -10px; border: 3px solid var(--surface); }
+.state-icons .icon:first-child { margin-left: 0; }
+.state-badge {
+  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
+  display: grid; place-items: center; font-size: 26px;
+}
+.state-badge.error { background: var(--danger-soft); color: var(--danger); }
+.state-title { font-size: 17px; margin: 0 0 8px; }
+.state-text { font-size: 13.5px; color: var(--text-2); line-height: 1.5; margin: 0 0 18px; }
+.state-code { font-size: 12px; color: var(--text-3); margin: 12px 0 0; }
+.state-hint { text-align: center; font-size: 12.5px; color: var(--text-3); margin: 14px 0; }
 
-/* ---------- Skatu pārslēgs ---------- */
-.segmented {
-  display: flex;
-  background: var(--surface-3);
-  border-radius: 12px;
-  padding: 3px;
-  margin-bottom: 16px;
-}
-.segmented button {
-  flex: 1; border: none; background: none; padding: 9px;
-  border-radius: 9px; font-size: 13.5px; font-weight: 600; color: var(--text-2);
-}
-.segmented button.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+.sk { display: block; background: var(--surface-2); border-radius: 8px; height: 12px; }
+.skeleton-card { background: var(--primary-soft); border-radius: var(--radius); padding: 18px; display: grid; gap: 10px; }
+.skeleton-card .sk { background: var(--surface); }
+.sk-sm { width: 40%; }
+.sk-lg { width: 65%; height: 24px; }
+.sk-md { width: 80%; height: 18px; }
+.sk-title { width: 45%; height: 14px; }
+.sk-icon { width: 42px; height: 42px; border-radius: 12px; }
+.sk-line { width: 70%; margin-bottom: 6px; }
+.sk-line.short { width: 45%; }
+.sk-amount { width: 54px; height: 14px; }
 
-/* ---------- Apakšējā navigācija ---------- */
-.tabbar {
-  position: sticky;
-  bottom: 0;
-  max-width: 440px;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  backdrop-filter: blur(14px);
-  border-top: 1px solid var(--border);
-  padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+/* ---------- Pogas ---------- */
+.btn {
+  border: none; border-radius: 999px; padding: 14px 20px;
+  font-size: 15px; font-weight: 600; background: var(--surface-2); color: var(--text);
 }
-.tabbar button {
-  flex: 1; border: none; background: none; padding: 6px 0;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  font-size: 10.5px; font-weight: 600; color: var(--text-3);
-}
-.tabbar button.active { color: var(--accent); }
-.tab-icon { font-size: 18px; line-height: 1; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-soft { background: var(--primary-soft); color: var(--primary); }
+.btn-danger { background: var(--danger-soft); color: var(--danger); }
+.btn-ghost { background: transparent; border: 1px solid var(--line); }
+.btn-block { display: block; width: 100%; text-align: center; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-link { display: inline-block; background: none; border: none; color: var(--primary); font-weight: 600; margin-top: 12px; }
 
 .fab {
-  position: fixed;
-  bottom: 86px;
-  right: calc(max(0px, (100% - 440px) / 2) + 20px);
-  width: 56px; height: 56px; border-radius: 50%;
-  background: var(--accent); color: var(--accent-text);
-  border: none; font-size: 26px; line-height: 1;
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 45%, transparent);
-  display: grid; place-items: center;
+  position: fixed; bottom: 86px;
+  right: calc(max(0px, (100% - 420px) / 2) + 16px);
+  background: var(--primary); color: #fff;
+  padding: 14px 22px; border-radius: 999px; font-weight: 600; font-size: 15px;
+  box-shadow: 0 10px 24px rgba(75, 50, 224, .4);
   z-index: 20;
 }
 
-/* ---------- Modālie logi un lapas ---------- */
-.sheet-backdrop {
-  position: fixed; inset: 0; background: rgba(8, 9, 13, .45);
-  display: flex; align-items: flex-end; justify-content: center; z-index: 50;
+/* ---------- Apakšējā navigācija ---------- */
+.tabbar {
+  position: sticky; bottom: 0; z-index: 10;
+  display: flex; width: 100%; max-width: 420px; margin: 0 auto;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+  padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
 }
-.sheet {
-  width: 100%; max-width: 440px;
-  background: var(--bg);
-  border-radius: 24px 24px 0 0;
-  max-height: 92dvh;
-  overflow-y: auto;
-  padding: 8px 20px calc(24px + env(safe-area-inset-bottom));
-  animation: slide-up .22s ease;
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 0; font-size: 10.5px; font-weight: 600; color: var(--text-3);
 }
-@keyframes slide-up { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
-
-.grabber { width: 38px; height: 4px; border-radius: 4px; background: var(--border); margin: 8px auto 14px; }
-
-.sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-.sheet-head h2 { font-size: 20px; margin: 0; letter-spacing: -.02em; }
-
-.modal-backdrop {
-  position: fixed; inset: 0; background: rgba(8, 9, 13, .5);
-  display: grid; place-items: center; z-index: 60; padding: 24px;
+.tab-icon {
+  font-size: 17px; line-height: 1; width: 46px; height: 26px;
+  display: grid; place-items: center; border-radius: 999px;
 }
-.modal {
-  background: var(--surface); border-radius: 20px; padding: 22px;
-  width: 100%; max-width: 340px; text-align: center; box-shadow: var(--shadow);
-}
-.modal h3 { margin: 0 0 8px; font-size: 17px; }
-.modal p { margin: 0 0 20px; color: var(--text-2); font-size: 14px; line-height: 1.5; }
-.modal-actions { display: flex; gap: 10px; }
-.modal-actions .btn { flex: 1; }
+.tab.active { color: var(--primary); }
+.tab.active .tab-icon { background: var(--primary-soft); }
 
 /* ---------- Formas ---------- */
+.form { margin-top: 8px; }
 .field { margin-bottom: 14px; }
 .label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; }
-.input, .select {
-  width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  padding: 13px 14px;
-  font-size: 15px;
-  outline: none;
+.input {
+  width: 100%; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 13px 14px; font-size: 15px; outline: none;
 }
-.input:focus, .select:focus { border-color: var(--accent); }
+.input:focus { border-color: var(--primary); }
 .input.invalid { border-color: var(--danger); }
-.error { color: var(--danger); font-size: 12.5px; margin-top: 6px; }
-.row { display: flex; gap: 10px; }
-.row > * { flex: 1; }
+.input.compact { width: auto; padding: 8px 10px; font-size: 13.5px; border-radius: 10px; }
+.input.search { border-radius: 999px; margin-top: 4px; }
+.error { color: var(--danger); font-size: 13px; margin: 8px 0 0; }
+.row-fields { display: flex; gap: 10px; }
+.row-fields > * { flex: 1; }
+.switch-row { display: flex; align-items: center; justify-content: space-between; }
+.form-hero { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px 0 18px; }
+
+.switch {
+  width: 48px; height: 28px; border-radius: 999px; border: none; flex: none;
+  background: var(--surface-2); position: relative; transition: background .15s ease;
+}
+.switch.on { background: var(--primary); }
+.switch::after {
+  content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
+  border-radius: 50%; background: #fff; transition: transform .15s ease;
+}
+.switch.on::after { transform: translateX(20px); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
-  border: 1px solid var(--border); background: var(--surface);
-  border-radius: 999px; padding: 9px 14px; font-size: 13px; font-weight: 600; color: var(--text-2);
+  border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
+  padding: 9px 14px; font-size: 13px; font-weight: 600; color: var(--text-2);
 }
-.chip.active { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+.plan {
+  display: flex; justify-content: space-between; align-items: center; width: 100%;
+  padding: 13px 14px; border: none; border-bottom: 1px solid var(--line);
+  background: var(--surface); font-size: 14px; text-align: left;
+}
+.plan:last-child { border-bottom: none; }
+.plan.active { background: var(--primary-soft); color: var(--primary); }
+.plan-amount { font-weight: 600; }
+
+/* ---------- Katalogs ---------- */
+.tabs { display: flex; gap: 16px; overflow-x: auto; margin: 14px 0 4px; }
+.tab-link {
+  border: none; background: none; padding: 6px 0 8px; font-size: 13.5px; font-weight: 600;
+  color: var(--text-2); white-space: nowrap; border-bottom: 2px solid transparent;
+}
+.tab-link.active { color: var(--primary); border-bottom-color: var(--primary); }
 
 .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .catalog-item {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-  padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px;
-  font-size: 11.5px; font-weight: 600; text-align: center; line-height: 1.25;
+  background: var(--surface); border-radius: 16px; box-shadow: var(--shadow);
+  padding: 14px 8px; display: flex; flex-direction: column; align-items: center; gap: 7px;
+  text-align: center;
 }
-.catalog-item.active { border-color: var(--accent); background: var(--accent-soft); }
+.catalog-name { font-size: 12.5px; font-weight: 600; }
+.catalog-price { font-size: 11.5px; color: var(--text-2); }
 
-.plan {
-  display: flex; justify-content: space-between; align-items: center;
-  border: 1px solid var(--border); background: var(--surface);
-  border-radius: 13px; padding: 13px 14px; font-size: 14px; width: 100%; text-align: left;
+/* ---------- Detaļas un saraksti ---------- */
+.detail-hero { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 0 20px; }
+.detail-hero h2 { font-size: 20px; margin: 0; }
+.detail-hero p { margin: 0; font-size: 14px; }
+
+.info-list {
+  background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow: hidden; margin-bottom: 12px;
 }
-.plan.active { border-color: var(--accent); background: var(--accent-soft); }
-.plan-amount { font-weight: 600; }
-
-/* ---------- Detaļas ---------- */
-.detail-head { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 12px 0 22px; }
-.detail-name { font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
-.detail-amount { font-size: 15px; color: var(--text-2); }
-
-.info-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-.info-row { display: flex; justify-content: space-between; padding: 14px; font-size: 14px; border-bottom: 1px solid var(--border); gap: 12px; }
+.info-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 13px 14px; font-size: 14px; border-bottom: 1px solid var(--line);
+}
 .info-row:last-child { border-bottom: none; }
-.info-row span:first-child { color: var(--text-2); }
-.info-row span:last-child { font-weight: 600; text-align: right; }
+.info-row > span:first-child { color: var(--text-2); }
+.info-row > span:last-child { font-weight: 600; text-align: right; }
+.info-row.as-button { width: 100%; background: none; border-left: none; border-right: none; border-top: none; text-align: left; }
+.info-row.as-button > span:first-child { color: var(--text); font-weight: 500; }
 
 /* ---------- Kalendārs ---------- */
-.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin: 8px 0 14px; }
 .cal-month { font-weight: 700; font-size: 17px; }
-.cal-nav { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); }
+.cal-nav { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .cal-weekday { text-align: center; font-size: 11px; color: var(--text-3); font-weight: 600; padding-bottom: 6px; }
 .cal-day {
-  aspect-ratio: 1; border: 1px solid transparent; background: var(--surface);
-  border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 4px; font-size: 13px; color: var(--text);
+  aspect-ratio: 1; border: 1px solid transparent; background: var(--surface); border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 13px;
 }
 .cal-day.blank { background: none; }
-.cal-day.today { border-color: var(--accent); color: var(--accent); font-weight: 700; }
-.cal-day.selected { background: var(--accent); color: var(--accent-text); }
+.cal-day.today { border-color: var(--primary); color: var(--primary); font-weight: 700; }
+.cal-day.selected { background: var(--primary); color: #fff; }
 .cal-dots { display: flex; gap: 3px; height: 6px; }
 .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
 
 /* ---------- Statistika ---------- */
-.donut-wrap { display: flex; justify-content: center; padding: 8px 0 18px; position: relative; }
+.donut-wrap { display: flex; justify-content: center; padding: 10px 0 18px; position: relative; }
 .donut-center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
 .donut-total { font-size: 20px; font-weight: 700; }
-.legend { display: flex; flex-direction: column; gap: 8px; }
+.legend { display: flex; flex-direction: column; gap: 9px; }
 .legend-row { display: flex; align-items: center; gap: 10px; font-size: 14px; }
 .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
 .legend-name { flex: 1; }
 .legend-value { font-weight: 600; }
 .legend-share { color: var(--text-2); font-size: 12.5px; width: 44px; text-align: right; }
+.empty { text-align: center; padding: 48px 20px; }
+.empty-emoji { font-size: 40px; }
+.empty h3 { margin: 12px 0 6px; font-size: 17px; }
+.empty p { margin: 0; font-size: 14px; color: var(--text-2); }
 
-/* ---------- Iestatījumi ---------- */
-.settings-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 18px; }
-.settings-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border-bottom: 1px solid var(--border); font-size: 14.5px; }
-.settings-row:last-child { border-bottom: none; }
-.settings-row .label { margin: 0; color: var(--text); font-weight: 500; font-size: 14.5px; }
-
-.switch { width: 48px; height: 28px; border-radius: 999px; background: var(--surface-3); border: none; position: relative; flex: none; transition: background .16s ease; }
-.switch.on { background: var(--accent); }
-.switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .16s ease; }
-.switch.on::after { transform: translateX(20px); }
-
-.check {
-  width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid var(--border);
-  background: var(--surface); display: grid; place-items: center; flex: none;
-  color: var(--accent-text); font-size: 13px;
+/* ---------- Loksne un modālais logs ---------- */
+.sheet-backdrop {
+  position: fixed; inset: 0; z-index: 50; background: rgba(10, 11, 18, .45);
+  display: flex; align-items: flex-end; justify-content: center;
 }
-.check.on { background: var(--accent); border-color: var(--accent); }
-
+.sheet {
+  width: 100%; max-width: 420px; background: var(--bg);
+  border-radius: 22px 22px 0 0; max-height: 92dvh; overflow-y: auto;
+  padding: 6px 16px calc(20px + env(safe-area-inset-bottom));
+}
+.grabber { width: 38px; height: 4px; border-radius: 4px; background: var(--line); margin: 8px auto 14px; }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.sheet-head h2 { font-size: 18px; margin: 0; }
 .file-drop {
-  border: 1.5px dashed var(--border); border-radius: var(--radius);
-  padding: 24px; text-align: center; background: var(--surface); color: var(--text-2); font-size: 14px;
+  border: 1.5px dashed var(--line); border-radius: var(--radius); padding: 24px;
+  text-align: center; background: var(--surface); color: var(--text-2); font-size: 14px;
 }
+.list { display: flex; flex-direction: column; gap: 8px; }
+.card {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 11px 12px;
+}
+.card-body { flex: 1; min-width: 0; }
+.card-name { font-size: 14px; font-weight: 600; }
+.card-meta { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+.card-right { text-align: right; }
+.card-amount { font-size: 14px; font-weight: 600; }
+.check {
+  width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid var(--line);
+  display: grid; place-items: center; flex: none; color: #fff; font-size: 13px;
+}
+.check.on { background: var(--primary); border-color: var(--primary); }
 
-/* ---------- Autentifikācija ---------- */
-.auth { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; padding: 32px 24px; }
-.brand { text-align: center; margin-bottom: 28px; }
-.brand-logo {
-  width: 62px; height: 62px; border-radius: 20px; background: var(--accent); color: var(--accent-text);
-  display: grid; place-items: center; font-size: 26px; font-weight: 700; margin: 0 auto 14px;
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 60; background: rgba(10, 11, 18, .5);
+  display: grid; place-items: center; padding: 24px;
 }
-.brand h1 { margin: 0; font-size: 27px; letter-spacing: -.03em; }
-.brand p { margin: 6px 0 0; color: var(--text-2); font-size: 14px; }
-.auth-switch { text-align: center; margin-top: 18px; font-size: 14px; color: var(--text-2); }
+.modal {
+  background: var(--surface); border-radius: 20px; padding: 22px;
+  width: 100%; max-width: 330px; text-align: center; box-shadow: var(--shadow);
+}
+.modal h3 { margin: 0 0 8px; font-size: 17px; }
+.modal p { margin: 0 0 18px; font-size: 14px; color: var(--text-2); line-height: 1.5; }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions .btn { flex: 1; }
+
+/* ---------- Ieeja (S-01) ---------- */
+.auth {
+  background: #0a0a14;
+  color: #fff;
+  min-height: 100dvh;
+  justify-content: space-between;
+}
+.auth-hero {
+  position: relative; padding: 20px 20px 10px;
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(96, 60, 240, .65), transparent 70%),
+    radial-gradient(40% 30% at 72% 32%, rgba(255, 176, 60, .45), transparent 70%);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 700; letter-spacing: -.02em; }
+.brand-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 3px solid #ff9f0a; border-right-color: transparent; transform: rotate(-30deg);
+}
+.orbit { position: relative; height: 270px; margin: 18px 0 8px; }
+.orbit::before {
+  content: ''; position: absolute; inset: 18px 28px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .14);
+}
+.orbit-item { position: absolute; transform: translate(-50%, -50%); box-shadow: 0 8px 20px rgba(0, 0, 0, .45); }
+.orbit-center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.orbit-amount { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
+.orbit-caption { font-size: 12px; color: rgba(255, 255, 255, .6); margin-top: 2px; }
+
+.auth-form { padding: 10px 20px calc(24px + env(safe-area-inset-bottom)); }
+.auth-form h1 { font-size: 27px; letter-spacing: -.03em; margin: 0 0 8px; }
+.auth-lead { color: rgba(255, 255, 255, .6); font-size: 14px; margin: 0 0 20px; line-height: 1.45; }
+.auth .label { color: rgba(255, 255, 255, .6); }
+.auth .input {
+  background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .18); color: #fff;
+}
+.auth .input::placeholder { color: rgba(255, 255, 255, .35); }
+.auth .btn-primary { margin-top: 16px; background: #5b3ff0; }
+.auth-terms { font-size: 11.5px; color: rgba(255, 255, 255, .45); text-align: center; margin: 14px 0 0; line-height: 1.5; }
