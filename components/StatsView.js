@@ -1,7 +1,7 @@
 'use client';
 
-import { CATEGORIES, CATEGORY_COLORS } from '../lib/catalog.js';
-import { formatMoney, monthlyEquivalent, monthlyTotal } from '../lib/dates.js';
+import { CATEGORIES, CATEGORY_COLORS } from '../lib/domain/categories.js';
+import { formatMoney, monthlyEquivalent, monthlyTotal } from '../lib/domain/money.js';
 
 const SIZE = 200;
 const RADIUS = 78;
@@ -66,7 +66,7 @@ export default function StatsView({ subscriptions }) {
         </div>
       </div>
 
-      <p className="section-title">Sadalījums pa kategorijām</p>
+      <h2 className="section-title">Sadalījums pa kategorijām</h2>
       <div className="legend">
         {groups.map((group) => (
           <div key={group.category} className="legend-row">
@@ -80,7 +80,7 @@ export default function StatsView({ subscriptions }) {
         ))}
       </div>
 
-      <p className="section-title" style={{ marginTop: 26 }}>Kopā</p>
+      <h2 className="section-title" style={{ marginTop: 26 }}>Kopā</h2>
       <div className="info-list">
         <div className="info-row">
           <span>Aktīvie abonementi</span>

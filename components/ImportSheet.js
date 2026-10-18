@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { parseStatement } from '../lib/csv.js';
-import { findCatalogItem } from '../lib/catalog.js';
-import { formatDate, formatMoney } from '../lib/dates.js';
-import ServiceIcon from './ServiceIcon.js';
+import { formatDate } from '../lib/domain/dates.js';
+import { formatMoney } from '../lib/domain/money.js';
+import ServiceIcon from './ui/ServiceIcon.js';
 
-export default function ImportSheet({ onImport, onClose }) {
+export default function ImportSheet({ catalog = [], onImport, onClose }) {
+  const findCatalogItem = (id) => catalog.find((item) => item.id === id) || null;
   const [candidates, setCandidates] = useState(null);
   const [selected, setSelected] = useState({});
   const [error, setError] = useState('');
@@ -16,7 +17,7 @@ export default function ImportSheet({ onImport, onClose }) {
     if (!file) return;
     setError('');
     const text = await file.text();
-    const found = parseStatement(text);
+    const found = parseStatement(text, catalog);
     if (found.length === 0) {
       setCandidates([]);
       setError('Failā netika atrasti regulārie maksājumi.');

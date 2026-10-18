@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import {
-  MONTHS, WEEKDAYS_SHORT, formatMoney, fromISO, nextPaymentISO, toISO,
-} from '../lib/dates.js';
-import ServiceIcon from './ServiceIcon.js';
+  MONTHS, WEEKDAYS_SHORT, fromISO, nextPaymentISO, toISO,
+} from '../lib/domain/dates.js';
+import { chargeAmount, formatMoney, monthlyTotal } from '../lib/domain/money.js';
+import ServiceIcon from './ui/ServiceIcon.js';
 
-export default function CalendarView({ subscriptions, onOpen }) {
+export default function CalendarView({ subscriptions, catalogById = {} }) {
   const today = new Date();
   const [cursor, setCursor] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [selected, setSelected] = useState(toISO(today));
@@ -76,7 +78,7 @@ export default function CalendarView({ subscriptions, onOpen }) {
               <span>{day}</span>
               <span className="cal-dots">
                 {items.slice(0, 3).map((sub) => (
-                  <span key={sub.id} className="cal-dot" style={{ background: sub.color }} />
+                  <span key={sub.id} className="cal-dot" style={{ background: catalogById[sub.catalogId]?.color || '#8A8F98' }} />
                 ))}
               </span>
             </button>
@@ -87,22 +89,28 @@ export default function CalendarView({ subscriptions, onOpen }) {
       <div style={{ marginTop: 22 }}>
         <p className="section-title">
           {selected.split('-').reverse().join('.')} — maksājumi
+          {selectedItems.length > 0 && (
+            <span className="day-total">Kopā {formatMoney(monthlyTotal(selectedItems))}</span>
+          )}
         </p>
         {selectedItems.length === 0 ? (
           <p className="muted tiny">Šajā dienā maksājumu nav.</p>
         ) : (
-          <div className="list">
+          <div className="card-list">
             {selectedItems.map((sub) => (
-              <button key={sub.id} type="button" className="card" onClick={() => onOpen(sub)}>
-                <ServiceIcon color={sub.color} mark={sub.mark} />
-                <div className="card-body">
-                  <div className="card-name">{sub.name}</div>
-                  <div className="card-meta">{sub.category}</div>
+              <Link key={sub.id} className="row" href={`/abonements/${sub.id}`}>
+                <ServiceIcon
+                  color={catalogById[sub.catalogId]?.color}
+                  mark={catalogById[sub.catalogId]?.mark || sub.name.charAt(0)}
+                />
+                <div className="row-body">
+                  <div className="row-name">{sub.name}</div>
+                  <div className="row-meta">{sub.category}</div>
                 </div>
-                <div className="card-right">
-                  <div className="card-amount">{formatMoney(sub.amount)}</div>
+                <div className="row-right">
+                  <div className="row-amount">{formatMoney(chargeAmount(sub))}</div>
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
         )}
