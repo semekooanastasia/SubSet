@@ -1,5 +1,17 @@
 # SubSet
 
+## Palaišana
+
+```bash
+npm install
+cp .env.example .env.local     # NEXT_PUBLIC_API_URL=http://localhost:4000
+npm run mock                   # 1. terminālis: testa serveris portā 4000
+npm run dev                    # 2. terminālis: lietotne http://localhost:3100
+```
+
+Ekrāna stāvokļu demonstrēšanai testa serveri var palaist ar citu scenāriju:
+`npm run mock:empty`, `npm run mock:error`, `npm run mock:slow`.
+
 Abonementu pārvaldības lietotne: apkopo visus lietotāja aktīvos abonementus vienuviet,
 rāda gaidāmos maksājumus laika skalā un brīdina pirms naudas norakstīšanas.
 
@@ -26,10 +38,39 @@ Būvēšana: `npm run build`.
 
 | Ceļš | Saturs |
 | --- | --- |
-| `app/` | Next.js maršruts, globālie stili un lietotnes stāvoklis |
-| `components/` | Ekrāni un atkārtoti lietojamie UI elementi |
-| `lib/` | Datumu aprēķini, katalogs, lokālā glabātuve, .csv parsētājs, paziņojumi |
-| `docs/` | Sprinta plāns un backlog |
+| `app/` | Maršruti (K2 prototipa ekrāni), globālie stili |
+| `app/(app)/` | Ekrāni aiz autentifikācijas ar kopīgu navigāciju |
+| `components/ui/` | Atkārtoti lietojamie UI elementi |
+| `components/states/` | Ielādes, tukšais un kļūdas stāvoklis |
+| `components/providers/` | Datu glabātuve (`StoreProvider`) |
+| `lib/api/` | API klients: bāzes adrese, galvenes, viens kļūdas tips, galapunkti |
+| `lib/domain/` | Naudas un datumu loģika, kategorijas |
+| `mock-server/` | Testa serveris bez atkarībām |
+| `docs/` | Sprinta plāns |
+
+## Arhitektūra
+
+- **API klients** — `lib/api/client.js`. Bāzes adrese nāk no `NEXT_PUBLIC_API_URL`,
+  galvenes (`Accept`, `Content-Type`, `Authorization`, `X-Client`) tiek veidotas vienā vietā,
+  visas kļūdas tiek pārveidotas vienā tipā `ApiError` ar lauku `code`.
+- **Vertikālā šķēle** — `/ieeja` → `POST /api/auth/login` → marķieris sesijā →
+  `/sakums` → `GET /api/subscriptions` + `GET /api/catalog` → saraksts un kopsummas ekrānā.
+  Pievienošana: `/pievienot` → `POST /api/subscriptions` → atjaunināts saraksts.
+- **Četri ekrāna stāvokļi** sākuma ekrānā: ielāde (S-04A), tukšs (S-04B), kļūda (S-04C), dati (S-04).
+
+## Maršruti
+
+| Maršruts | Prototipa ekrāns |
+| --- | --- |
+| `/ieeja` | S-01 / S-02 Ieeja |
+| `/sakums` | S-04 Sākums un tā stāvokļi |
+| `/pievienot` | S-05 Katalogs |
+| `/pievienot/[serviceId]` | S-06 Abonementa dati |
+| `/pievienot/manuali` | S-05M Pievienot manuāli |
+| `/abonements/[id]` | S-10 Detaļas, S-10D dzēšana |
+| `/kalendars` | S-11 Kalendārs |
+| `/statistika` | S-14 Statistika |
+| `/iestatijumi` | S-12 Iestatījumi |
 
 ## Funkcionalitāte
 
