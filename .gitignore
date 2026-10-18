@@ -1,0 +1,22 @@
+# Atkarības
+node_modules/
+
+# Next.js build izvade
+.next/
+out/
+next-env.d.ts
+
+# Vide un noslēpumi
+.env
+.env.*
+!.env.example
+
+# Testi un žurnāli
+coverage/
+*.log
+npm-debug.log*
+
+# OS un redaktori
+.DS_Store
+.idea/
+.vscode/
