@@ -9,6 +9,7 @@
     "mock:empty": "MOCK_SCENARIO=empty node mock-server/server.js",
     "mock:error": "MOCK_SCENARIO=error node mock-server/server.js",
     "mock:slow": "MOCK_SCENARIO=slow node mock-server/server.js",
+    "test": "node --test \"tests/*.test.js\"",
     "build": "next build",
     "start": "next start --port 3100"
   },
