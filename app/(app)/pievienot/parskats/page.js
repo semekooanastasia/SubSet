@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '../../../../components/providers/StoreProvider.js';
 import TopBar from '../../../../components/ui/TopBar.js';
 import ServiceIcon from '../../../../components/ui/ServiceIcon.js';
+import Icon from '../../../../components/ui/Icon.js';
 import { DEFAULT_SETTINGS, loadSettings } from '../../../../lib/settings.js';
 import { formatDate, formatDateWithWeekdayYear, formatReminder } from '../../../../lib/domain/dates.js';
 import {
@@ -21,7 +22,7 @@ function beforeLabel(days) {
 
 export default function ParskatsPage() {
   const router = useRouter();
-  const { draft, setDraft, add, subscriptions, catalog } = useStore();
+  const { draft, setDraft, add, subscriptions } = useStore();
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -37,7 +38,6 @@ export default function ParskatsPage() {
 
   if (!draft) return <div className="content"><p className="state-hint">Ielādē…</p></div>;
 
-  const service = catalog.find((item) => item.id === draft.catalogId) || null;
   const inTrial = Boolean(draft.trialUntil);
 
   // Pārskats rāda, cik maksās, kad norakstīšana sāksies — arī izmēģinājuma gadījumā.
@@ -70,7 +70,7 @@ export default function ParskatsPage() {
       <div className="review-content">
         <section className="review-card">
           <div className="review-head">
-            <ServiceIcon color={service?.color} mark={service?.mark || draft.name.slice(0, 1).toUpperCase()} />
+            <ServiceIcon catalogId={draft.catalogId} category={draft.category} name={draft.name} />
             <div>
               <div className="review-service">{[draft.name, draft.planLabel].filter(Boolean).join(' ')}</div>
               <div className="review-amount">{formatSigned(chargeAmount(charged))} {cycleLabel}</div>
@@ -102,7 +102,7 @@ export default function ParskatsPage() {
         </section>
 
         <div className="notice">
-          <span className="notice-icon" aria-hidden="true" />
+          <Icon name="info" size={20} />
           <div>
             <p className="notice-title">Atgādinājums {formatReminder(draft.nextPayment, settings.reminderDays)}</p>
             <p className="notice-text">

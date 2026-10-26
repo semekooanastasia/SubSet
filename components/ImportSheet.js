@@ -5,6 +5,7 @@ import { parseStatement } from '../lib/csv.js';
 import { formatDate } from '../lib/domain/dates.js';
 import { formatMoney } from '../lib/domain/money.js';
 import ServiceIcon from './ui/ServiceIcon.js';
+import Icon from './ui/Icon.js';
 
 export default function ImportSheet({ catalog = [], onImport, onClose }) {
   const findCatalogItem = (id) => catalog.find((item) => item.id === id) || null;
@@ -50,7 +51,7 @@ export default function ImportSheet({ catalog = [], onImport, onClose }) {
         {candidates === null ? (
           <>
             <label className="file-drop" style={{ display: 'block' }}>
-              <div style={{ fontSize: 28, marginBottom: 8 }}>📄</div>
+              <div className="file-drop-icon"><Icon name="add" size={28} /></div>
               Izvēlieties bankas pēdējā mēneša pārskata .csv failu
               <input type="file" accept=".csv,text/csv" onChange={handleFile} style={{ display: 'none' }} />
             </label>
@@ -75,11 +76,12 @@ export default function ImportSheet({ catalog = [], onImport, onClose }) {
                         onClick={() => toggle(item.key)}
                       >
                         <span className={`check ${selected[item.key] ? 'on' : ''}`}>
-                          {selected[item.key] ? '✓' : ''}
+                          {selected[item.key] && <Icon name="check" size={16} />}
                         </span>
                         <ServiceIcon
-                          color={catalogItem ? catalogItem.color : '#8a8f98'}
-                          mark={catalogItem ? catalogItem.mark : '•'}
+                          catalogId={item.catalogId}
+                          category={item.category}
+                          name={item.name}
                           size="icon-sm"
                         />
                         <div className="card-body">

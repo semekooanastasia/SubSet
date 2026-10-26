@@ -7,14 +7,15 @@ import { login } from '../../lib/api/auth.js';
 import { saveSession } from '../../lib/session.js';
 import { toApiError } from '../../lib/api/errors.js';
 import { formatMoney } from '../../lib/domain/money.js';
+import ServiceIcon from '../../components/ui/ServiceIcon.js';
 
 const ORBIT = [
-  { mark: '✦', color: '#10A37F', x: 50, y: 6 },
-  { mark: 'D+', color: '#113CCF', x: 88, y: 34 },
-  { mark: 'D', color: '#58CC02', x: 76, y: 76 },
-  { mark: '☁', color: '#0A84FF', x: 32, y: 88 },
-  { mark: '▶', color: '#FF0000', x: 4, y: 58 },
-  { mark: 'S', color: '#1DB954', x: 10, y: 18 },
+  { id: 'chatgpt', x: 50, y: 6 },
+  { id: 'disney', x: 88, y: 34 },
+  { id: 'duolingo', x: 76, y: 76 },
+  { id: 'icloud', x: 32, y: 88 },
+  { id: 'youtube', x: 4, y: 58 },
+  { id: 'spotify', x: 10, y: 18 },
 ];
 
 export default function IeejaPage() {
@@ -44,11 +45,11 @@ export default function IeejaPage() {
         <div className="orbit">
           {ORBIT.map((item) => (
             <span
-              key={item.mark}
-              className="icon orbit-item"
-              style={{ background: item.color, left: `${item.x}%`, top: `${item.y}%` }}
+              key={item.id}
+              className="orbit-item"
+              style={{ left: `${item.x}%`, top: `${item.y}%` }}
             >
-              {item.mark}
+              <ServiceIcon catalogId={item.id} />
             </span>
           ))}
           <div className="orbit-center">

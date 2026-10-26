@@ -4,6 +4,7 @@
 import Link from 'next/link';
 import { useStore } from '../../../components/providers/StoreProvider.js';
 import TopBar from '../../../components/ui/TopBar.js';
+import Icon from '../../../components/ui/Icon.js';
 import TotalCard from '../../../components/ui/TotalCard.js';
 import SubscriptionRow from '../../../components/ui/SubscriptionRow.js';
 import LoadingState from '../../../components/states/LoadingState.js';
@@ -16,7 +17,7 @@ export default function SakumsPage() {
 
   return (
     <>
-      <TopBar title="Mani abonementi" action={<Link className="icon-btn" href="/iestatijumi" aria-label="Paziņojumi">🔔</Link>} />
+      <TopBar title="Mani abonementi" action={<Link className="icon-btn" href="/iestatijumi" aria-label="Paziņojumi"><Icon name="bell" /></Link>} />
 
       <div className="content">
         {status === 'loading' && <LoadingState />}

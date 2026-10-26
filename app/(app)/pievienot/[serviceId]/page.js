@@ -32,7 +32,7 @@ export default function AbonementaDatiPage({ params }) {
       <TopBar title={item.name} back />
       <div className="content">
         <div className="form-hero">
-          <ServiceIcon color={item.color} mark={item.mark} size="icon-lg" />
+          <ServiceIcon catalogId={item.id} category={item.category} name={item.name} size="icon-lg" />
           <span className="muted">{item.category}</span>
         </div>
 

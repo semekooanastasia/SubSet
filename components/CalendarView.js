@@ -7,6 +7,7 @@ import {
 } from '../lib/domain/dates.js';
 import { chargeAmount, formatMoney, monthlyTotal } from '../lib/domain/money.js';
 import ServiceIcon from './ui/ServiceIcon.js';
+import Icon from './ui/Icon.js';
 
 export default function CalendarView({ subscriptions, catalogById = {} }) {
   const today = new Date();
@@ -48,14 +49,14 @@ export default function CalendarView({ subscriptions, catalogById = {} }) {
           className="cal-nav"
           onClick={() => setCursor(new Date(year, month - 1, 1))}
           aria-label="Iepriekšējais mēnesis"
-        >‹</button>
+        ><Icon name="chevron-right" size={20} flip /></button>
         <div className="cal-month">{MONTHS[month]} {year}</div>
         <button
           type="button"
           className="cal-nav"
           onClick={() => setCursor(new Date(year, month + 1, 1))}
           aria-label="Nākamais mēnesis"
-        >›</button>
+        ><Icon name="chevron-right" size={20} /></button>
       </div>
 
       <div className="cal-grid">
@@ -99,10 +100,7 @@ export default function CalendarView({ subscriptions, catalogById = {} }) {
           <div className="card-list">
             {selectedItems.map((sub) => (
               <Link key={sub.id} className="row" href={`/abonements/${sub.id}`}>
-                <ServiceIcon
-                  color={catalogById[sub.catalogId]?.color}
-                  mark={catalogById[sub.catalogId]?.mark || sub.name.charAt(0)}
-                />
+                <ServiceIcon catalogId={sub.catalogId} category={sub.category} name={sub.name} />
                 <div className="row-body">
                   <div className="row-name">{sub.name}</div>
                   <div className="row-meta">{sub.category}</div>
