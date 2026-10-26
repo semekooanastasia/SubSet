@@ -15,11 +15,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
 
       - name: Instalēt atkarības
         run: npm ci
+
+      - name: Palaist vienībtestus
+        run: npm test
 
       - name: Būvēt lietotni
         run: npm run build
