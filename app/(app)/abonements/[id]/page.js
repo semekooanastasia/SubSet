@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '../../../../components/providers/StoreProvider.js';
 import TopBar from '../../../../components/ui/TopBar.js';
 import ServiceIcon from '../../../../components/ui/ServiceIcon.js';
+import Icon from '../../../../components/ui/Icon.js';
 import SubscriptionForm from '../../../../components/SubscriptionForm.js';
 import ConfirmModal from '../../../../components/ConfirmModal.js';
 import { daysLabel, daysUntil, formatFullDate, nextPaymentISO } from '../../../../lib/domain/dates.js';
@@ -60,7 +61,7 @@ export default function AbonementaDetalasPage({ params }) {
 
       <div className="content">
         <div className="detail-hero">
-          <ServiceIcon color={catalogItem?.color} mark={catalogItem?.mark || subscription.name.charAt(0)} size="icon-lg" />
+          <ServiceIcon catalogId={subscription.catalogId} category={subscription.category} name={subscription.name} size="icon-lg" />
           <h2>{subscription.name}</h2>
           <p className="muted">
             {formatMoney(chargeAmount(subscription))} / {subscription.cycle === 'yearly' ? 'gadā' : 'mēnesī'}
@@ -86,7 +87,7 @@ export default function AbonementaDetalasPage({ params }) {
 
         {catalogItem?.cancelUrl && (
           <a className="btn btn-soft btn-block" href={catalogItem.cancelUrl} target="_blank" rel="noreferrer noopener">
-            Kā atcelt abonementu ↗
+            Kā atcelt abonementu <Icon name="open-in-new" size={18} />
           </a>
         )}
 

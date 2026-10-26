@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useStore } from '../../../components/providers/StoreProvider.js';
 import TopBar from '../../../components/ui/TopBar.js';
+import Icon from '../../../components/ui/Icon.js';
 import ImportSheet from '../../../components/ImportSheet.js';
 import ConfirmModal from '../../../components/ConfirmModal.js';
 import { loadSettings, saveSettings } from '../../../lib/settings.js';
@@ -104,11 +105,11 @@ export default function IestatijumiPage() {
         <h2 className="section-title">Dati</h2>
         <div className="info-list">
           <button type="button" className="info-row as-button" onClick={() => setImporting(true)}>
-            <span>Importēt bankas izrakstu (.csv)</span><span className="muted">›</span>
+            <span>Importēt bankas izrakstu (.csv)</span><Icon name="chevron-right" size={20} className="muted" />
           </button>
           <div className="info-row"><span>Serveris</span><span className="muted mono">{BASE_URL}</span></div>
           <button type="button" className="info-row as-button" onClick={() => setSigningOut(true)}>
-            <span className="danger">Iziet no profila</span><span className="muted">›</span>
+            <span className="danger">Iziet no profila</span><Icon name="chevron-right" size={20} className="muted" />
           </button>
         </div>
       </div>

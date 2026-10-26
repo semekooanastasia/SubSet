@@ -73,9 +73,11 @@ a { color: inherit; text-decoration: none; }
 .topbar-title.sm { font-size: 17px; font-weight: 600; }
 .topbar-action { margin-left: auto; }
 .icon-btn {
-  width: 36px; height: 36px; border-radius: 12px; border: none;
-  background: transparent; font-size: 17px; display: grid; place-items: center;
+  width: 40px; height: 40px; border-radius: 999px; border: none;
+  background: transparent; display: grid; place-items: center; color: var(--text);
 }
+.topbar > .icon-btn:first-child { margin-left: -8px; }
+.topbar-action .icon-btn { margin-right: -8px; }
 
 .section-title {
   font-size: 13px; font-weight: 600; color: var(--text-3);
@@ -141,10 +143,30 @@ a { color: inherit; text-decoration: none; }
 .badge.soon { background: var(--warn-soft); color: var(--warn); }
 .badge.trial { background: var(--primary-soft); color: var(--primary); }
 
+.ic {
+  display: inline-block; flex: none;
+  width: var(--ic-size, 24px); height: var(--ic-size, 24px);
+  background: currentColor;
+  -webkit-mask: var(--ic-url) no-repeat center / contain;
+  mask: var(--ic-url) no-repeat center / contain;
+}
+.ic-flip { transform: rotate(180deg); }
+
 .icon {
   width: 42px; height: 42px; border-radius: 12px; flex: none;
-  display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 15px;
+  display: grid; place-items: center; overflow: hidden;
+  color: #fff; font-weight: 700; font-size: 15px;
 }
+.icon img { display: block; height: auto; }
+.icon-mono { background: var(--primary-soft); color: var(--primary); }
+/* Neitrāls glifs, kas nav zīmola logotips: krāsu ņem no tēmas. */
+.icon-tint {
+  aspect-ratio: 1; background: var(--text-2);
+  -webkit-mask: var(--ic-url) no-repeat center / contain;
+  mask: var(--ic-url) no-repeat center / contain;
+}
+.icon-bordered { box-shadow: inset 0 0 0 1px var(--line); }
+.icon-sm { width: 34px; height: 34px; border-radius: 10px; font-size: 13px; }
 .icon-lg { width: 64px; height: 64px; border-radius: 19px; font-size: 22px; }
 
 /* ---------- Stāvokļi ---------- */
@@ -156,10 +178,10 @@ a { color: inherit; text-decoration: none; }
 .state-icons .icon { margin-left: -10px; border: 3px solid var(--surface); }
 .state-icons .icon:first-child { margin-left: 0; }
 .state-badge {
-  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
-  display: grid; place-items: center; font-size: 26px;
+  width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 14px;
+  display: grid; place-items: center;
 }
-.state-badge.error { background: var(--danger-soft); color: var(--danger); }
+.state-badge.is-error { background: var(--danger-soft); color: var(--danger); }
 .state-title { font-size: 17px; margin: 0 0 8px; }
 .state-text { font-size: 13.5px; color: var(--text-2); line-height: 1.5; margin: 0 0 18px; }
 .state-code { font-size: 12px; color: var(--text-3); margin: 12px 0 0; }
@@ -213,7 +235,7 @@ a { color: inherit; text-decoration: none; }
   padding: 6px 0; font-size: 10.5px; font-weight: 600; color: var(--text-3);
 }
 .tab-icon {
-  font-size: 17px; line-height: 1; width: 46px; height: 26px;
+  width: 64px; height: 32px;
   display: grid; place-items: center; border-radius: 999px;
 }
 .tab.active { color: var(--primary); }
@@ -230,7 +252,10 @@ a { color: inherit; text-decoration: none; }
 .input:focus { border-color: var(--primary); }
 .input.invalid { border-color: var(--danger); }
 .input.compact { width: auto; padding: 8px 10px; font-size: 13.5px; border-radius: 10px; }
-.input.search { border-radius: 999px; margin-top: 4px; }
+.input.search { border-radius: 999px; padding-left: 44px; }
+
+.search-field { position: relative; margin-top: 4px; }
+.search-icon { position: absolute; left: 14px; top: 50%; margin-top: -10px; color: var(--text-2); }
 .error { color: var(--danger); font-size: 13px; margin: 8px 0 0; }
 .row-fields { display: flex; gap: 10px; }
 .row-fields > * { flex: 1; }
@@ -300,6 +325,36 @@ a { color: inherit; text-decoration: none; }
 .info-row.as-button { width: 100%; background: none; border-left: none; border-right: none; border-top: none; text-align: left; }
 .info-row.as-button > span:first-child { color: var(--text); font-weight: 500; }
 
+/* ---------- Pārskats pirms saglabāšanas (S-07) ---------- */
+.review-content { flex: 1; display: flex; flex-direction: column; gap: 16px; padding: 4px 16px 16px; }
+
+.review-card {
+  background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden;
+}
+.review-head { display: flex; align-items: center; gap: 12px; padding: 16px; border-bottom: 1px solid var(--line); }
+.review-service { font-size: 14px; font-weight: 500; color: var(--text-2); }
+.review-amount { font-size: 22px; font-weight: 600; letter-spacing: -.01em; margin-top: 2px; }
+
+.notice {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--primary-soft); color: var(--primary);
+  border-radius: 12px; padding: 12px 16px;
+}
+.notice-title { margin: 0; font-size: 14px; font-weight: 600; line-height: 20px; }
+.notice-text { margin: 2px 0 0; font-size: 12px; line-height: 16px; opacity: .85; }
+
+.impact { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 0; padding: 0 4px; }
+.impact span { font-size: 12px; line-height: 16px; color: var(--text-2); }
+.impact strong { font-size: 14px; font-weight: 600; }
+
+.action-bar {
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding: 12px 16px 16px;
+}
+.action-bar .btn { min-height: 52px; }
+.action-bar .btn-link { width: 100%; margin: 0; padding: 12px; text-align: center; }
+
 /* ---------- Kalendārs ---------- */
 .cal-head { display: flex; align-items: center; justify-content: space-between; margin: 8px 0 14px; }
 .cal-month { font-weight: 700; font-size: 17px; }
@@ -327,7 +382,7 @@ a { color: inherit; text-decoration: none; }
 .legend-value { font-weight: 600; }
 .legend-share { color: var(--text-2); font-size: 12.5px; width: 44px; text-align: right; }
 .empty { text-align: center; padding: 48px 20px; }
-.empty-emoji { font-size: 40px; }
+.empty-emoji { display: grid; place-items: center; color: var(--text-3); margin-bottom: 4px; }
 .empty h3 { margin: 12px 0 6px; font-size: 17px; }
 .empty p { margin: 0; font-size: 14px; color: var(--text-2); }
 
@@ -348,6 +403,7 @@ a { color: inherit; text-decoration: none; }
   border: 1.5px dashed var(--line); border-radius: var(--radius); padding: 24px;
   text-align: center; background: var(--surface); color: var(--text-2); font-size: 14px;
 }
+.file-drop-icon { display: grid; place-items: center; margin-bottom: 8px; color: var(--primary); }
 .list { display: flex; flex-direction: column; gap: 8px; }
 .card {
   display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
@@ -360,7 +416,7 @@ a { color: inherit; text-decoration: none; }
 .card-amount { font-size: 14px; font-weight: 600; }
 .check {
   width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid var(--line);
-  display: grid; place-items: center; flex: none; color: #fff; font-size: 13px;
+  display: grid; place-items: center; flex: none; color: #fff;
 }
 .check.on { background: var(--primary); border-color: var(--primary); }
 
@@ -400,7 +456,10 @@ a { color: inherit; text-decoration: none; }
   content: ''; position: absolute; inset: 18px 28px; border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, .14);
 }
-.orbit-item { position: absolute; transform: translate(-50%, -50%); box-shadow: 0 8px 20px rgba(0, 0, 0, .45); }
+.orbit-item {
+  position: absolute; display: grid; transform: translate(-50%, -50%);
+  border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, .45);
+}
 .orbit-center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
 .orbit-amount { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
 .orbit-caption { font-size: 12px; color: rgba(255, 255, 255, .6); margin-top: 2px; }

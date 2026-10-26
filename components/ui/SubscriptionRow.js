@@ -12,7 +12,7 @@ export default function SubscriptionRow({ subscription, catalogItem }) {
 
   return (
     <Link className="row" href={`/abonements/${subscription.id}`}>
-      <ServiceIcon color={catalogItem?.color || subscription.color} mark={catalogItem?.mark || subscription.name.charAt(0).toUpperCase()} />
+      <ServiceIcon catalogId={subscription.catalogId} category={subscription.category} name={subscription.name} />
       <div className="row-body">
         <div className="row-name">{subscription.name}</div>
         <div className="row-meta">

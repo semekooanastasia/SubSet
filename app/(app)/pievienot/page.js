@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useStore } from '../../../components/providers/StoreProvider.js';
 import TopBar from '../../../components/ui/TopBar.js';
 import ServiceIcon from '../../../components/ui/ServiceIcon.js';
+import Icon from '../../../components/ui/Icon.js';
 import LoadingState from '../../../components/states/LoadingState.js';
 import ErrorState from '../../../components/states/ErrorState.js';
 import { formatMoney } from '../../../lib/domain/money.js';
@@ -32,12 +33,15 @@ export default function KatalogsPage() {
 
         {status === 'ready' && (
           <>
-            <input
-              className="input search"
-              placeholder="Meklē, piem., Netflix"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
+            <div className="search-field">
+              <Icon name="search" size={20} className="search-icon" />
+              <input
+                className="input search"
+                placeholder="Meklē, piem., Netflix"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+              />
+            </div>
 
             <div className="tabs">
               {tabs.map((item) => (
@@ -62,7 +66,7 @@ export default function KatalogsPage() {
                   const cheapest = Math.min(...item.plans.map((plan) => plan.amount));
                   return (
                     <Link key={item.id} className="catalog-item" href={`/pievienot/${item.id}`}>
-                      <ServiceIcon color={item.color} mark={item.mark} />
+                      <ServiceIcon catalogId={item.id} category={item.category} name={item.name} />
                       <span className="catalog-name">{item.name}</span>
                       <span className="catalog-price">
                         {item.plans.length > 1 ? 'no ' : ''}{formatMoney(cheapest)}

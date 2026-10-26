@@ -1,6 +1,7 @@
 'use client';
 
 import { CATEGORIES, CATEGORY_COLORS } from '../lib/domain/categories.js';
+import Icon from './ui/Icon.js';
 import { formatMoney, monthlyEquivalent, monthlyTotal } from '../lib/domain/money.js';
 
 const SIZE = 200;
@@ -25,7 +26,7 @@ export default function StatsView({ subscriptions }) {
   if (subscriptions.length === 0) {
     return (
       <div className="empty">
-        <div className="empty-emoji">📊</div>
+        <div className="empty-emoji"><Icon name="pie-chart" size={40} /></div>
         <h3>Statistikas vēl nav</h3>
         <p>Pievienojiet abonementus, lai redzētu izdevumu sadalījumu pa kategorijām.</p>
       </div>

@@ -1,8 +1,10 @@
+import Icon from '../ui/Icon.js';
+
 // S-04C: kļūdas stāvoklis.
 export default function ErrorState({ error, onRetry }) {
   return (
     <div className="state-card" role="alert">
-      <div className="state-badge error">⚠</div>
+      <div className="state-badge is-error"><Icon name="cloud-off" size={36} /></div>
       <h2 className="state-title">Neizdevās ielādēt abonementus</h2>
       <p className="state-text">
         {error?.isNetwork

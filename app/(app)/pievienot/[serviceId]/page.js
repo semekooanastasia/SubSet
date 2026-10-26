@@ -11,7 +11,7 @@ import SubscriptionForm from '../../../../components/SubscriptionForm.js';
 export default function AbonementaDatiPage({ params }) {
   const { serviceId } = use(params);
   const router = useRouter();
-  const { catalog, add, status } = useStore();
+  const { catalog, setDraft, status } = useStore();
   const item = catalog.find((entry) => entry.id === serviceId);
 
   if (status !== 'ready') return <div className="content"><p className="state-hint">Ielādē…</p></div>;
@@ -32,7 +32,7 @@ export default function AbonementaDatiPage({ params }) {
       <TopBar title={item.name} back />
       <div className="content">
         <div className="form-hero">
-          <ServiceIcon color={item.color} mark={item.mark} size="icon-lg" />
+          <ServiceIcon catalogId={item.id} category={item.category} name={item.name} size="icon-lg" />
           <span className="muted">{item.category}</span>
         </div>
 
@@ -46,10 +46,10 @@ export default function AbonementaDatiPage({ params }) {
             planLabel: plan.label,
             nextPayment: '',
           }}
-          submitLabel="Saglabāt abonementu"
-          onSubmit={async (values) => {
-            await add(values);
-            router.replace('/sakums');
+          submitLabel="Turpināt"
+          onSubmit={(values) => {
+            setDraft(values);
+            router.push('/pievienot/parskats');
           }}
         />
       </div>

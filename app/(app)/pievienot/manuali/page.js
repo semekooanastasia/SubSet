@@ -8,7 +8,7 @@ import SubscriptionForm from '../../../../components/SubscriptionForm.js';
 
 export default function ManualiPage() {
   const router = useRouter();
-  const { add } = useStore();
+  const { setDraft } = useStore();
 
   return (
     <>
@@ -16,10 +16,10 @@ export default function ManualiPage() {
       <div className="content">
         <SubscriptionForm
           initial={{ name: '', category: 'Cits', cycle: 'monthly', nextPayment: '' }}
-          submitLabel="Saglabāt abonementu"
-          onSubmit={async (values) => {
-            await add(values);
-            router.replace('/sakums');
+          submitLabel="Turpināt"
+          onSubmit={(values) => {
+            setDraft(values);
+            router.push('/pievienot/parskats');
           }}
         />
       </div>

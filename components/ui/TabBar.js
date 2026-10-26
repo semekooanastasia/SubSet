@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Icon from './Icon.js';
 
 const TABS = [
-  { href: '/sakums', label: 'Sākums', icon: '⌂' },
-  { href: '/kalendars', label: 'Kalendārs', icon: '▦' },
-  { href: '/statistika', label: 'Statistika', icon: '◔' },
-  { href: '/iestatijumi', label: 'Iestatījumi', icon: '⚙' },
+  { href: '/sakums', label: 'Sākums', icon: 'home' },
+  { href: '/kalendars', label: 'Kalendārs', icon: 'calendar' },
+  { href: '/statistika', label: 'Statistika', icon: 'pie-chart' },
+  { href: '/iestatijumi', label: 'Iestatījumi', icon: 'settings' },
 ];
 
 export default function TabBar() {
@@ -18,7 +19,7 @@ export default function TabBar() {
         const active = pathname === tab.href;
         return (
           <Link key={tab.href} href={tab.href} className={active ? 'tab active' : 'tab'}>
-            <span className="tab-icon">{tab.icon}</span>
+            <span className="tab-icon"><Icon name={tab.icon} /></span>
             {tab.label}
           </Link>
         );

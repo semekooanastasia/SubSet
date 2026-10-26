@@ -19,6 +19,8 @@ export function StoreProvider({ children }) {
   const [subscriptions, setSubscriptions] = useState([]);
   const [catalog, setCatalog] = useState([]);
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  // Melnraksts no formas (S-06) uz pārskatu (S-07) un atpakaļ.
+  const [draft, setDraft] = useState(null);
 
   const load = useCallback(async (signal) => {
     setStatus('loading');
@@ -83,12 +85,14 @@ export function StoreProvider({ children }) {
     catalog,
     settings,
     setSettings,
+    draft,
+    setDraft,
     reload: () => load(),
     add,
     addMany,
     update,
     remove,
-  }), [status, error, subscriptions, sorted, catalog, settings, load, add, addMany, update, remove]);
+  }), [status, error, subscriptions, sorted, catalog, settings, draft, load, add, addMany, update, remove]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }
