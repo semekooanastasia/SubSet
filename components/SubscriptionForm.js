@@ -21,9 +21,10 @@ export default function SubscriptionForm({ initial, catalogItem, onSubmit, submi
   const amountValue = Number.parseFloat(String(amount).replace(',', '.'));
   const nameOk = name.trim().length > 0;
   const amountOk = Number.isFinite(amountValue) && amountValue > 0;
-  const dateOk = Boolean(nextPayment);
-  const trialOk = !trial || Boolean(trialUntil);
-  const valid = nameOk && amountOk && dateOk && trialOk;
+  // Ar izmēģinājumu obligātais datums ir izmēģinājuma beigas, nevis nākamais maksājums:
+  // ar `Boolean(nextPayment)` poga nekad neatslēgtos, jo šo lauku forma tad nerāda.
+  const dateOk = trial ? Boolean(trialUntil) : Boolean(nextPayment);
+  const valid = nameOk && amountOk && dateOk;
 
   function choosePlan(plan) {
     setPlanLabel(plan.label);
@@ -125,7 +126,7 @@ export default function SubscriptionForm({ initial, catalogItem, onSubmit, submi
           <label className="label" htmlFor="trial">Izmēģinājums beidzas *</label>
           <input
             id="trial"
-            className={`input ${touched && !trialOk ? 'invalid' : ''}`}
+            className={`input ${touched && !dateOk ? 'invalid' : ''}`}
             type="date"
             min={todayISO()}
             value={trialUntil}
