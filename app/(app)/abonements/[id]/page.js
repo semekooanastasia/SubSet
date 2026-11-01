@@ -92,11 +92,11 @@ export default function AbonementaDetalasPage({ params }) {
         )}
 
         {error && <p className="error">{error.message} (kods: {error.code})</p>}
+      </div>
 
-        <div className="row-fields">
-          <button type="button" className="btn" onClick={() => setEditing(true)}>Rediģēt</button>
-          <button type="button" className="btn btn-danger" onClick={() => setConfirming(true)}>Dzēst</button>
-        </div>
+      <div className="action-bar action-bar-row">
+        <button type="button" className="btn" onClick={() => setEditing(true)}>Rediģēt</button>
+        <button type="button" className="btn btn-danger" onClick={() => setConfirming(true)}>Dzēst</button>
       </div>
 
       {confirming && (
