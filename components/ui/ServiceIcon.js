@@ -1,8 +1,9 @@
-import { logoFor } from '../../lib/domain/logos.js';
+import { BLANK_LOGO, logoFor } from '../../lib/domain/logos.js';
 
 // Pakalpojuma plāksnīte: kataloga logotips, bet nezināmam pakalpojumam — monogramma.
 export default function ServiceIcon({ catalogId, category, name = '', size = '' }) {
-  const logo = logoFor(catalogId, category);
+  // Bez nosaukuma monogrammas nav, tāpēc tiek rādīts neitrāls glifs.
+  const logo = logoFor(catalogId, category) || (name.trim() ? null : BLANK_LOGO);
 
   if (!logo) {
     return <span className={`icon icon-mono ${size}`.trim()}>{name.charAt(0).toUpperCase() || '•'}</span>;

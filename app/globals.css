@@ -114,7 +114,7 @@ a { color: inherit; text-decoration: none; }
 /* ---------- Saraksts ---------- */
 .list-head { display: flex; align-items: baseline; justify-content: space-between; margin: 20px 0 8px; }
 .list-head h2 { font-size: 15px; font-weight: 600; margin: 0; }
-.list-sort { font-size: 13px; color: var(--primary); font-weight: 500; }
+.list-sort { display: inline-flex; align-items: center; gap: 2px; font-size: 13px; color: var(--primary); font-weight: 500; }
 
 .card-list {
   background: var(--surface);
@@ -262,6 +262,30 @@ a { color: inherit; text-decoration: none; }
 .switch-row { display: flex; align-items: center; justify-content: space-between; }
 .form-hero { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px 0 18px; }
 
+.service-card {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+  background: var(--surface); border-radius: 16px; padding: 14px; box-shadow: var(--shadow);
+}
+.service-card.muted-card { background: var(--surface-2); box-shadow: none; margin-bottom: 0; }
+.service-body { flex: 1; min-width: 0; }
+.service-name { font-size: 15px; font-weight: 600; }
+.service-meta { font-size: 12.5px; color: var(--text-2); margin-top: 2px; }
+.service-amount { font-size: 14px; font-weight: 600; color: var(--text-2); }
+
+/* Lauks ar piedēkli: "€" summai, "Izvēlēties" datumam. */
+.input-suffix { position: relative; }
+.input-suffix .input { padding-right: 34px; }
+.input-suffix .date-input { padding-right: 92px; }
+.date-input::-webkit-calendar-picker-indicator { opacity: 0; width: 0; padding: 0; margin: 0; }
+.suffix-text, .suffix-link {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 14px; background: none; border: none; padding: 0;
+}
+.suffix-text { color: var(--text-2); }
+.suffix-link { color: var(--primary); font-weight: 600; }
+
+.section-heading { font-size: 16px; font-weight: 600; margin: 18px 0 10px; }
+
 .switch {
   width: 48px; height: 28px; border-radius: 999px; border: none; flex: none;
   background: var(--surface-2); position: relative; transition: background .15s ease;
@@ -275,10 +299,11 @@ a { color: inherit; text-decoration: none; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
+  display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
   padding: 9px 14px; font-size: 13px; font-weight: 600; color: var(--text-2);
 }
-.chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.chip.active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
 
 .plan {
   display: flex; justify-content: space-between; align-items: center; width: 100%;
@@ -353,6 +378,8 @@ a { color: inherit; text-decoration: none; }
   padding: 12px 16px 16px;
 }
 .action-bar .btn { min-height: 52px; }
+.form .action-bar { margin: 18px -16px 0; }
+.action-hint { margin: 0 0 2px; font-size: 12px; color: var(--text-2); text-align: center; }
 .action-bar .btn-link { width: 100%; margin: 0; padding: 12px; text-align: center; }
 
 /* ---------- Kalendārs ---------- */
