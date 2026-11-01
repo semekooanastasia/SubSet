@@ -1,5 +1,9 @@
 # Sprints 2 — SubSet
 
+> Kursa materiālos un sprinta kartītē šis pats sprints ir numurēts kā **1. sprints**.
+> Repozitorijā numerācija sākas ar `SPRINT-1.md`, kas bija K4 plānošanas uzdevums
+> (05.10.–12.10.) un netika izstrādāts.
+
 **Periods:** 12.10.–02.11.2026 (trīs nedēļas)
 **Sprinta vadītāja:** Anastasija Semeko
 **Reāli pieejamais laiks nedēļā:** 12 h → kopā **36 h**
@@ -17,8 +21,9 @@ un nav kur pārbaudīt kļūdu un tukšos stāvokļus.
 
 ## Backlog
 
-Kopā novērtēts: **36 h**. Prioritāte dilstoši — ja laiks beidzas, pēdējās vienības
-tiek izmestas, nevis saspiestas (izmešanas secība: SP2-8, SP2-7).
+Sprinta sākumā novērtēts: **34 h** astoņām vienībām (SP2-1 … SP2-8) pret 36 h pieejamā laika.
+Gaitā pievienotas vēl divas vienības (SP2-9, SP2-10), kopā **40 h**. Prioritāte dilstoši:
+ja laiks beidzas, pēdējās vienības tiek izmestas, nevis saspiestas.
 
 ### SP2-1 · Domēna slānis naudas un datumu loģikai · 4 h · ✅ pabeigts
 
@@ -112,7 +117,7 @@ lai sarakstā atrastu vajadzīgo abonementu ar skatienu, nevis lasot nosaukumus.
 > kļūdas tekstam. Vēlākā `.error` kārtula ar tādu pašu svaru atcēla `margin: 0 auto`,
 > un aplis bija pabīdīts pa kreisi, nevis centrā. Modifikators pārsaukts par `is-error`.
 
-### SP2-7 · Lēmums par īsto API · 2 h · ⏳ 3. nedēļa
+### SP2-7 · Lēmums par īsto API · 2 h · ✅ pabeigts
 
 Kā komanda, mēs vēlamies pierakstītu lēmumu par īsto serveri,
 lai nākamais sprints nesāktos ar to pašu jautājumu.
@@ -121,14 +126,14 @@ lai nākamais sprints nesāktos ar to pašu jautājumu.
 - Pierakstīts pamatojums, kāpēc šajā sprintā paliek testa serveris.
 - Pārbaudīts, ka pāreja ir viena `NEXT_PUBLIC_API_URL` vērtības maiņa, nevis koda labojumi.
 
-### SP2-8 · Demonstrācija un sprinta kartīte · 2 h · ⏳ 3. nedēļa
+### SP2-8 · Demonstrācija un sprinta kartīte · 2 h · ✅ pabeigts
 
 Kā students, es vēlos sagatavotu demonstrācijas gaitu,
 lai trīs minūtēs parādītu scenāriju, nevis meklētu, kur kas atveras.
 
 - Demonstrācijas gaita pierakstīta (zemāk), izmēģināta vismaz vienu reizi ar taimeri.
-- Aizpildīta sprinta kartīte `docs/sprinta-kartite.html`, izdrukājama vienā A4 lapā.
-- README sākumā ir palaišanas norādes testa serverim un lietotnei.
+- Aizpildīta sprinta kartīte `docs/K5-sprinta-kartite.docx`, viena A4 lappuse.
+- README pirmajās rindās ir palaišanas norādes testa serverim un lietotnei.
 
 ## Šajā sprintā netiek darīts
 
@@ -136,6 +141,25 @@ lai trīs minūtēs parādītu scenāriju, nevis meklētu, kur kas atveras.
 - Paziņojumi, kad lietotnes cilne ir aizvērta (service worker, PWA) — nākamajā sprintā
 - Abonementu atcelšana caur lietotni (trešo pušu API ierobežojumi)
 - Maksājumu vēstures ekrāns
+
+## Plānotais un izpildītais
+
+| Rādītājs | Plānots sprinta sākumā | Faktiski |
+| --- | --- | --- |
+| Vienības | 8 (SP2-1 … SP2-8) | 10; pabeigtas visas |
+| Novērtējums | 34 h | 40 h |
+| Pieejamais laiks | 36 h (12 h nedēļā) | ieguldītās stundas ierakstītas kartītē |
+| Testi naudas loģikai | vismaz 3 | 28 |
+| Izlabotas kļūdas | nav plānotas | 3 |
+
+Divas vienības radās sprinta gaitā, nevis plānošanas sapulcē. SP2-9 un SP2-10 nāca no
+K2 prototipa salīdzināšanas ar gatavo lietotni: trūka apstiprināšanas ekrāna un visas
+ikonas vēl bija Unicode simboli. Abas iekļāvās 3. nedēļā, jo pamatslāņi jau bija gatavi.
+
+Trīs kļūdas tika atrastas, rakstot testus un ekrānus, nevis lietojot lietotni: `.csv`
+parsētājs sadalīja summu `-7,99` divās šūnās, abonementu ar izmēģinājumu nebija iespējams
+saglabāt, un kļūdas stāvokļa aplis bija nobīdīts pa kreisi. Visas trīs ir aprakstītas
+attiecīgajās vienībās augstāk.
 
 ## Gaita pa nedēļām
 
