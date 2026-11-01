@@ -1,13 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { getToken } from '../../lib/session.js';
 import { StoreProvider } from '../../components/providers/StoreProvider.js';
 import TabBar from '../../components/ui/TabBar.js';
 
+// Prototipā apakšējā navigācija ir tikai uz šīm četrām sadaļām. Pievienošanas
+// plūsmā un abonementa detaļās tās vietā ir kājene ar darbības pogu.
+const TAB_ROUTES = ['/sakums', '/kalendars', '/statistika', '/iestatijumi'];
+
 export default function AppLayout({ children }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -24,7 +29,7 @@ export default function AppLayout({ children }) {
     <StoreProvider>
       <div className="screen">
         {children}
-        <TabBar />
+        {TAB_ROUTES.includes(pathname) && <TabBar />}
       </div>
     </StoreProvider>
   );

@@ -5,7 +5,6 @@ import { use } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '../../../../components/providers/StoreProvider.js';
 import TopBar from '../../../../components/ui/TopBar.js';
-import ServiceIcon from '../../../../components/ui/ServiceIcon.js';
 import SubscriptionForm from '../../../../components/SubscriptionForm.js';
 
 export default function AbonementaDatiPage({ params }) {
@@ -31,11 +30,6 @@ export default function AbonementaDatiPage({ params }) {
     <>
       <TopBar title={item.name} back />
       <div className="content">
-        <div className="form-hero">
-          <ServiceIcon catalogId={item.id} category={item.category} name={item.name} size="icon-lg" />
-          <span className="muted">{item.category}</span>
-        </div>
-
         <SubscriptionForm
           catalogItem={item}
           initial={{

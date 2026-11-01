@@ -34,7 +34,7 @@ export default function SakumsPage() {
               <>
                 <div className="list-head">
                   <h2>Visi abonementi ({sorted.length})</h2>
-                  <span className="list-sort">Pēc datuma</span>
+                  <span className="list-sort">Pēc datuma<Icon name="chevron-down" size={18} /></span>
                 </div>
                 <div className="card-list">
                   {sorted.map((subscription) => (

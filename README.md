@@ -1,23 +1,20 @@
 # SubSet
 
+```bash
+npm install
+cp .env.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:4000
+npm start                    # testa serveris portā 4000 + lietotne http://localhost:3100
+```
+
+Testa serveri un lietotni var palaist arī atsevišķi: `npm run mock` un `npm run dev`.
+Pieteikšanās: jebkurš e-pasts ar `@`; paroli šī versija neprasa.
+
 [![CI](https://github.com/semekooanastasia/SubSet/actions/workflows/ci.yml/badge.svg)](https://github.com/semekooanastasia/SubSet/actions/workflows/ci.yml)
 
 Abonementu pārvaldības lietotne: apkopo visus lietotāja aktīvos abonementus vienuviet,
 rāda gaidāmos maksājumus laika skalā un brīdina pirms naudas norakstīšanas.
 
 RTU studiju projekts (4. kurss). Autore: Anastasija Semeko.
-
-## Palaišana
-
-```bash
-npm install
-cp .env.example .env.local     # NEXT_PUBLIC_API_URL=http://localhost:4000
-npm run mock                   # 1. terminālis: testa serveris portā 4000
-npm run dev                    # 2. terminālis: lietotne http://localhost:3100
-```
-
-Pieteikšanās testa serverī: jebkurš e-pasts ar `@`. Paroli šī versija neprasa — skatīt
-[docs/API.md](docs/API.md) sadaļu par zināmajiem ierobežojumiem.
 
 ### Testa servera scenāriji
 
@@ -61,7 +58,7 @@ Būvēšana: `npm run build`.
 | `public/logos/` | Pakalpojumu logotipi no K2 prototipa |
 | `mock-server/` | Testa serveris bez atkarībām |
 | `tests/` | Vienībtesti naudas, datumu un .csv loģikai |
-| `docs/` | Sprinta plāni un sprinta kartīte |
+| `docs/` | Sprinta plāni, API līgums un aizpildītā sprinta kartīte |
 
 ## Arhitektūra
 
@@ -114,3 +111,4 @@ Galapunkti, kļūdu kodi un pamatojums, kāpēc pagaidām tiek lietots testa ser
 - Pabeigtības definīcija: [DEFINITION_OF_DONE.md](DEFINITION_OF_DONE.md)
 - Iepriekšējais sprints: [docs/SPRINT-1.md](docs/SPRINT-1.md)
 - Aktuālais sprints: [docs/SPRINT-2.md](docs/SPRINT-2.md)
+- Aizpildītā sprinta kartīte: [docs/K5-sprinta-kartite.docx](docs/K5-sprinta-kartite.docx)

@@ -1,20 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CATEGORIES } from '../lib/domain/categories.js';
 import { formatMoney } from '../lib/domain/money.js';
 import { todayISO } from '../lib/domain/dates.js';
+import ServiceIcon from './ui/ServiceIcon.js';
+import Icon from './ui/Icon.js';
 
-export default function SubscriptionForm({ initial, catalogItem, onSubmit, submitLabel = 'Saglabāt' }) {
+function decimal(value) {
+  return String(value).replace('.', ',');
+}
+
+// K2 prototipā ir divi ekrāni ar atšķirīgiem laukiem:
+// S-06 (no kataloga) — tarifs, summa, regularitāte, datums;
+// S-05M (manuāli) — priekšskatījums, nosaukums, summa, regularitāte, datums, kategorija.
+export default function SubscriptionForm({ initial, catalogItem, onSubmit, submitLabel = 'Turpināt' }) {
+  const fromCatalog = Boolean(catalogItem);
+  const dateRef = useRef(null);
+
   const [name, setName] = useState(initial.name || '');
-  const [amount, setAmount] = useState(initial.amount != null ? String(initial.amount) : '');
+  // Latviski decimāldaļu atdala komats, tāpat kā prototipā un formatMoney izvadē.
+  const [amount, setAmount] = useState(initial.amount != null ? decimal(initial.amount) : '');
   const [cycle, setCycle] = useState(initial.cycle || 'monthly');
   const [category, setCategory] = useState(initial.category || 'Cits');
   const [nextPayment, setNextPayment] = useState(initial.nextPayment || '');
   const [planLabel, setPlanLabel] = useState(initial.planLabel || '');
   const [trial, setTrial] = useState(Boolean(initial.trialUntil));
   const [trialUntil, setTrialUntil] = useState(initial.trialUntil || '');
-  const [touched, setTouched] = useState(false);
   const [busy, setBusy] = useState(false);
   const [apiError, setApiError] = useState(null);
 
@@ -28,13 +40,19 @@ export default function SubscriptionForm({ initial, catalogItem, onSubmit, submi
 
   function choosePlan(plan) {
     setPlanLabel(plan.label);
-    setAmount(String(plan.amount));
+    setAmount(decimal(plan.amount));
     setCycle(plan.cycle);
+  }
+
+  function openPicker() {
+    const field = dateRef.current;
+    if (!field) return;
+    if (typeof field.showPicker === 'function') field.showPicker();
+    else field.focus();
   }
 
   async function submit(event) {
     event.preventDefault();
-    setTouched(true);
     setApiError(null);
     if (!valid || busy) return;
     setBusy(true);
@@ -56,59 +74,118 @@ export default function SubscriptionForm({ initial, catalogItem, onSubmit, submi
     }
   }
 
+  const cycleChips = [
+    { value: 'monthly', label: 'Reizi mēnesī' },
+    { value: 'yearly', label: 'Reizi gadā' },
+  ];
+
   return (
     <form className="form" onSubmit={submit}>
-      {catalogItem && (
+      {fromCatalog ? (
+        <div className="service-card">
+          <ServiceIcon catalogId={catalogItem.id} category={catalogItem.category} name={catalogItem.name} />
+          <div>
+            <div className="service-name">{catalogItem.name}</div>
+            <div className="service-meta">{catalogItem.category}, aizpildīts no kataloga</div>
+          </div>
+        </div>
+      ) : (
         <div className="field">
-          <span className="label">Tarifa plāns</span>
-          <div className="card-list">
+          <span className="label">Priekšskatījums sarakstā</span>
+          <div className="service-card muted-card">
+            <ServiceIcon category={category} name={name} />
+            <div className="service-body">
+              <div className="service-name">{name.trim() || 'Nosaukums'}</div>
+              <div className="service-meta">
+                {nextPayment ? nextPayment.split('-').reverse().join('.') : 'Datums'}, {category}
+              </div>
+            </div>
+            <div className="service-amount">{formatMoney(amountOk ? amountValue : 0)}</div>
+          </div>
+        </div>
+      )}
+
+      {fromCatalog && (
+        <div className="field">
+          <span className="label">Tarifs</span>
+          <div className="chips">
             {catalogItem.plans.map((plan) => (
               <button
                 key={plan.label}
                 type="button"
-                className={`plan ${planLabel === plan.label ? 'active' : ''}`}
+                className={`chip ${planLabel === plan.label ? 'active' : ''}`}
                 onClick={() => choosePlan(plan)}
               >
-                <span>{plan.label}</span>
-                <span className="plan-amount">
-                  {formatMoney(plan.amount)} / {plan.cycle === 'yearly' ? 'gadā' : 'mēn.'}
-                </span>
+                {planLabel === plan.label && <Icon name="check" size={16} />}
+                {plan.label} {formatMoney(plan.amount)}
               </button>
             ))}
           </div>
         </div>
       )}
 
-      <div className="field">
-        <label className="label" htmlFor="name">Nosaukums *</label>
-        <input
-          id="name"
-          className={`input ${touched && !nameOk ? 'invalid' : ''}`}
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          placeholder="Piemēram, sporta klubs"
-        />
-      </div>
-
-      <div className="row-fields">
+      {!fromCatalog && (
         <div className="field">
-          <label className="label" htmlFor="amount">Summa (EUR) *</label>
+          <label className="label" htmlFor="name">Nosaukums *</label>
+          <input
+            id="name"
+            className="input"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Piem., sporta klubs"
+          />
+        </div>
+      )}
+
+      <div className="field">
+        <label className="label" htmlFor="amount">Summa (€) *</label>
+        <div className="input-suffix">
           <input
             id="amount"
-            className={`input ${touched && !amountOk ? 'invalid' : ''}`}
+            className="input"
             inputMode="decimal"
             value={amount}
             onChange={(event) => setAmount(event.target.value)}
-            placeholder="12,99"
+            placeholder="Piem., 12,99"
           />
+          <span className="suffix-text">€</span>
         </div>
-        <div className="field">
-          <label className="label" htmlFor="cycle">Regularitāte</label>
-          <select id="cycle" className="input" value={cycle} onChange={(event) => setCycle(event.target.value)}>
-            <option value="monthly">Reizi mēnesī</option>
-            <option value="yearly">Reizi gadā</option>
-          </select>
+      </div>
+
+      <div className="field">
+        <span className="label">Regularitāte *</span>
+        <div className="chips">
+          {cycleChips.map((item) => (
+            <button
+              key={item.value}
+              type="button"
+              className={`chip ${cycle === item.value ? 'active' : ''}`}
+              onClick={() => setCycle(item.value)}
+            >
+              {cycle === item.value && <Icon name="check" size={16} />}
+              {item.label}
+            </button>
+          ))}
         </div>
+      </div>
+
+      <div className="field">
+        <label className="label" htmlFor="date">
+          {trial ? 'Izmēģinājums beidzas *' : 'Nākamā maksājuma datums *'}
+        </label>
+        <div className="input-suffix">
+          <input
+            id="date"
+            ref={dateRef}
+            className="input date-input"
+            type="date"
+            min={todayISO()}
+            value={trial ? trialUntil : nextPayment}
+            onChange={(event) => (trial ? setTrialUntil : setNextPayment)(event.target.value)}
+          />
+          <button type="button" className="suffix-link" onClick={openPicker}>Izvēlēties</button>
+        </div>
+        {trial && <p className="hint">Pirmais maksājums tiks gaidīts šajā datumā.</p>}
       </div>
 
       <div className="field switch-row">
@@ -121,57 +198,33 @@ export default function SubscriptionForm({ initial, catalogItem, onSubmit, submi
         />
       </div>
 
-      {trial ? (
+      {!fromCatalog && (
         <div className="field">
-          <label className="label" htmlFor="trial">Izmēģinājums beidzas *</label>
-          <input
-            id="trial"
-            className={`input ${touched && !dateOk ? 'invalid' : ''}`}
-            type="date"
-            min={todayISO()}
-            value={trialUntil}
-            onChange={(event) => setTrialUntil(event.target.value)}
-          />
-          <p className="hint">Pirmais maksājums tiks gaidīts šajā datumā.</p>
-        </div>
-      ) : (
-        <div className="field">
-          <label className="label" htmlFor="date">Nākamā maksājuma datums *</label>
-          <input
-            id="date"
-            className={`input ${touched && !dateOk ? 'invalid' : ''}`}
-            type="date"
-            min={todayISO()}
-            value={nextPayment}
-            onChange={(event) => setNextPayment(event.target.value)}
-          />
+          <span className="label">Kategorija</span>
+          <div className="chips">
+            {CATEGORIES.map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={`chip ${category === item ? 'active' : ''}`}
+                onClick={() => setCategory(item)}
+              >
+                {category === item && <Icon name="check" size={16} />}
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
-      <div className="field">
-        <span className="label">Kategorija</span>
-        <div className="chips">
-          {CATEGORIES.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className={`chip ${category === item ? 'active' : ''}`}
-              onClick={() => setCategory(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {touched && !valid && (
-        <p className="error">Aizpildi obligātos laukus: nosaukums, summa un datums.</p>
-      )}
       {apiError && <p className="error">{apiError.message} (kods: {apiError.code})</p>}
 
-      <button type="submit" className="btn btn-primary btn-block" disabled={!valid || busy}>
-        {busy ? 'Saglabā…' : submitLabel}
-      </button>
+      <div className="action-bar">
+        <p className="action-hint">Aizpildi obligātos laukus (*), lai turpinātu.</p>
+        <button type="submit" className="btn btn-primary btn-block" disabled={!valid || busy}>
+          {busy ? 'Saglabā…' : submitLabel}
+        </button>
+      </div>
     </form>
   );
 }

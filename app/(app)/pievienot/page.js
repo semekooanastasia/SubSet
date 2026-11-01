@@ -11,6 +11,12 @@ import LoadingState from '../../../components/states/LoadingState.js';
 import ErrorState from '../../../components/states/ErrorState.js';
 import { formatMoney } from '../../../lib/domain/money.js';
 
+// Režģī nosaukumam jāietilpst vienā rindā, tāpēc tarifa vārds netiek rādīts:
+// "YouTube Premium" kļūst par "YouTube", tāpat kā K2 prototipā.
+function gridName(name) {
+  return name.replace(/\s+(Premium|Plus)$/, '');
+}
+
 export default function KatalogsPage() {
   const { catalog, status, error, reload } = useStore();
   const [query, setQuery] = useState('');
@@ -56,7 +62,7 @@ export default function KatalogsPage() {
               ))}
             </div>
 
-            <h2 className="section-title">Populārie pakalpojumi</h2>
+            <h2 className="section-heading">Populārie pakalpojumi</h2>
 
             {visible.length === 0 ? (
               <p className="state-hint">Nekas netika atrasts.</p>
@@ -67,7 +73,7 @@ export default function KatalogsPage() {
                   return (
                     <Link key={item.id} className="catalog-item" href={`/pievienot/${item.id}`}>
                       <ServiceIcon catalogId={item.id} category={item.category} name={item.name} />
-                      <span className="catalog-name">{item.name}</span>
+                      <span className="catalog-name">{gridName(item.name)}</span>
                       <span className="catalog-price">
                         {item.plans.length > 1 ? 'no ' : ''}{formatMoney(cheapest)}
                       </span>
